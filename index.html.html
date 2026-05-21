@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> TamanduÁgua </title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e9e6df;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+            min-height: 100vh;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* CONTAINER PRINCIPAL RESPONSIVO (PC e Celular) */
+        .app-container {
+            width: 100%;
+            max-width: 1000px;
+            background: #f8f8f8;
+            border: 4px solid #111;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 12px 12px 0px #111;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Topo do sistema */
+        .top {
+            background: #b9e7ff;
+            padding: 25px;
+            border-bottom: 4px solid #111;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pixel {
+            font-family: 'VT323', monospace;
+            letter-spacing: 2px;
+        }
+
+        .title {
+            font-size: 48px;
+            line-height: 42px;
+        }
+
+        .subtitle {
+            margin-top: 5px;
+            font-size: 18px;
+        }
+
+        .gif {
+            height: 80px;
+            width: auto;
+            border: 3px solid #111;
+            image-rendering: pixelated;
+        }
+
+        /* GRID DO CONTEÚDO */
+        .content-grid {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Estilo Neo-brutalista dos blocos */
+        .box {
+            background: #fff;
+            border: 3px solid #111;
+            padding: 20px;
+            box-shadow: 6px 6px 0px #111;
+            border-radius: 4px;
+        }
+
+        .date {
+            font-size: 15px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .water-number {
+            font-size: 58px;
+            font-weight: 700;
+        }
+
+        .meta {
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 24px;
+            border: 3px solid #111;
+            margin-top: 15px;
+            background: #eee;
+            overflow: hidden;
+        }
+
+        .bar {
+            width: 0%;
+            height: 100%;
+            background: #00b7ff;
+            transition: 0.4s ease-out;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            padding: 16px;
+            border: 3px solid #111;
+            font-size: 16px;
+            font-weight: 700;
+            transition: 0.1s;
+            box-shadow: 4px 4px 0px #111;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #111;
+        }
+
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #111;
+        }
+
+        .water { background: #8fe3ff; }
+        .coffee { background: #d8b28c; }
+        .tea { background: #c4f0b6; }
+        .energy { background: #ffd966; }
+
+        .custom {
+            margin-top: 14px;
+            width: 100%;
+            background: #111;
+            color: #fff;
+        }
+
+        .custom:hover {
+            background: #333;
+        }
+
+        .logs {
+            margin-top: 10px;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .log {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #111;
+            margin-bottom: 10px;
+            background: #fafafa;
+            gap: 10px;
+        }
+
+        .log-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .small {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border: 2px solid #111;
+            font-size: 13px;
+            font-weight: 700;
+            background: #8fe3ff;
+            white-space: nowrap;
+        }
+
+        .delete {
+            background: #ff6b6b;
+            color: white;
+            padding: 6px 10px;
+            font-size: 12px;
+            box-shadow: none;
+        }
+        .delete:hover {
+            transform: none;
+            background: #ff4f4f;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            opacity: 0.7;
+            border-top: 4px solid #111;
+            background: #f1f1f1;
+        }
+
+        .drive { background: #d7ffd7; }
+        .import-box { background: #ffe9b9; } /* Nova cor para a caixa de importação */
+        .sync { margin-top: 12px; font-size: 14px; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 3px solid #111;
+            margin-top: 8px;
+            font-size: 15px;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        /* Estilo escondido para o input de arquivo real, ativado pelo botão bruto */
+        .file-input {
+            display: none;
+        }
+
+        .stats {
+            margin-top: 15px;
+            line-height: 1.8;
+            font-size: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+
+        .warning {
+            margin-top: 15px;
+            padding: 10px;
+            background: #ffe3e3;
+            border: 2px solid #ff4f4f;
+            display: none;
+            font-weight: 700;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        
+        <div class="top">
+            <div class="header-text">
+                <div class="title pixel">TAMANDUÁGUA</div>
+                <div class="subtitle">Sua caça diária por hidratação</div>
+            </div>
+            <img class="gif" src="https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyNDEzcHhuYjZjNjlvemU1cTR1OHhpMDgzcjlkNDZlc253dG9ra3d2OCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/jnTsNUhAW6xf4c3yKF/200w.gif" alt="Tamanduá animado">
+        </div>
+
+        <div class="content-grid">
+            
+            <div class="column">
+                
+                <div class="box">
+                    <div class="section-title pixel">ADICIONAR RÁPIDO</div>
+                    <div class="buttons">
+                        <button class="water" onclick="addDrink('Água', 300, 1)">💧 Água +300ml</button>
+                        <button class="coffee" onclick="addDrink('Café', 150, 0.7)">☕ Café +150ml</button>
+                        <button class="tea" onclick="addDrink('Chá', 200, 0.8)">🍵 Chá +200ml</button>
+                        <button class="energy" onclick="addDrink('Energético', 250, 0.5)">⚡ Energético</button>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="section-title pixel">OUTRA BEBIDA</div>
+                    <input type="text" id="customName" placeholder="Nome da bebida (ex: Suco)">
+                    <input type="number" id="customMl" placeholder="Quantidade (ml)">
+                    <input type="number" step="0.1" id="customFactor" placeholder="Fator de hidratação (ex: 0.9)">
+                    <button class="custom" onclick="saveCustomDrink()">Registrar Bebida</button>
+                </div>
+
+                <div class="box">
+                    <div class="section-title pixel">ALTERAR META</div>
+                    <input id="goalInput" type="number" placeholder="Nova meta diária (ml)">
+                    <button class="custom" onclick="updateGoal()">Definir Nova Meta</button>
+                </div>
+
+            </div>
+
+            <div class="column">
+                
+                <div class="box">
+                    <div class="date" id="date"></div>
+                    <div class="water-number" id="totalWater">0.0L</div>
+                    <div class="meta" id="percentage">0% da meta atingida</div>
+                    <div class="progress">
+                        <div class="bar" id="bar"></div>
+                    </div>
+                    <div class="stats">
+                        <div>🎯 Meta: <b id="goalText">2000ml</b></div>
+                        <div>⚡ Faltam: <b id="remaining">2000ml</b></div>
+                        <div>🔥 Bebidas: <b id="logCount">0</b></div>
+                        <div>🚫 Limite Máx: <b>5000ml</b></div>
+                    </div>
+                    <div class="warning" id="warning">⚠️ Atenção: Limite máximo diário atingido!</div>
+                </div>
+
+                <div class="box">
+                    <div class="section-title pixel">HISTÓRICO DO DIA</div>
+                    <div class="logs" id="logs"></div>
+                </div>
+
+                <div class="box drive">
+                    <div class="section-title pixel">EXPORTAR DADOS</div>
+                    <p style="font-size: 14px; margin-bottom: 8px;">Baixe sua lista de consumo em um arquivo CSV 100% compatível com o Excel.</p>
+                    <button class="custom" onclick="exportCSV()">⬇️ Baixar Planilha para Excel</button>
+                    <div class="sync">Última exportação: <span id="lastBackup">nunca</span></div>
+                </div>
+
+                <div class="box import-box">
+                    <div class="section-title pixel">IMPORTAR BACKUP</div>
+                    <p style="font-size: 14px; margin-bottom: 8px;">Selecione seu arquivo CSV antigo para juntar com os dados atuais do navegador sem duplicar nada.</p>
+                    <input type="file" id="csvFileInput" class="file-input" accept=".csv" onchange="importCSV(this)">
+                    <button class="custom" style="background: #222;" onclick="document.getElementById('csvFileInput').click()">📁 Carregar Arquivo CSV</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer">TAMANDUÁGUA © @kauaryos </div>
+    </div>
+
+    <script>
+        // ======================
+        // CONFIG
+        // ======================
+        const MAX_LIMIT = 5000;
+        let goal = Number(localStorage.getItem("tamanduagua_goal")) || 2000;
+        let logs = JSON.parse(localStorage.getItem("tamanduagua_logs")) || [];
+
+        // ======================
+        // DATE
+        // ======================
+        function updateDate(){
+            const now = new Date();
+            document.getElementById("date").innerHTML = "📅 " + now.toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        // ======================
+        // STORAGE
+        // ======================
+        function saveStorage(){
+            localStorage.setItem("tamanduagua_logs", JSON.stringify(logs));
+            localStorage.setItem("tamanduagua_goal", goal);
+        }
+
+        // ======================
+        // META
+        // ======================
+        function updateGoal(){
+            const input = Number(document.getElementById("goalInput").value);
+            if(!input || input < 500){ return; }
+            goal = input;
+            saveStorage();
+            render();
+            document.getElementById("goalInput").value = "";
+        }
+
+        // ======================
+        // ADD DRINK
+        // ======================
+        function addDrink(name, ml, factor){
+            const hydration = Math.round(ml * factor);
+            const totalHydration = logs.reduce((acc, item) => acc + item.hydration, 0);
+
+            if(totalHydration + hydration > MAX_LIMIT){
+                document.getElementById("warning").style.display = "block";
+                return;
+            }
+
+            document.getElementById("warning").style.display = "none";
+
+            logs.push({
+                name,
+                ml,
+                factor,
+                hydration,
+                createdAt: new Date().toISOString()
+            });
+
+            saveStorage();
+            render();
+        }
+
+        // ======================
+        // CUSTOM DRINK
+        // ======================
+        function saveCustomDrink(){
+            const name = document.getElementById("customName").value.trim();
+            const ml = Number(document.getElementById("customMl").value);
+            const factor = Number(document.getElementById("customFactor").value);
+
+            if(!name || !ml || isNaN(factor)){ return; }
+
+            addDrink(name, ml, factor);
+
+            document.getElementById("customName").value = "";
+            document.getElementById("customMl").value = "";
+            document.getElementById("customFactor").value = "";
+        }
+
+        // ======================
+        // DELETE
+        // ======================
+        function deleteLog(index){
+            logs.splice(index, 1);
+            saveStorage();
+            render();
+        }
+
+        // ======================
+        // EXPORT EXCEL
+        // ======================
+        function exportCSV(){
+            if(logs.length === 0){ alert("Não há registros para exportar!"); return; }
+
+            let csv = "data;hora;bebida;quantidade_ml;fator_hidrico;hidratacao_real_ml\r\n";
+
+            logs.forEach(log => {
+                let createdDate = log.createdAt ? new Date(log.createdAt) : new Date();
+                if(isNaN(createdDate.getTime())){ createdDate = new Date(); }
+
+                const data = createdDate.toLocaleDateString("pt-BR");
+                const hora = createdDate.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+                const bebida = String(log.name || "Bebida").replace(/;/g, " ").replace(/\n/g, " ").replace(/\r/g, " ");
+                const factorFormatted = String(log.factor).replace('.', ',');
+
+                csv += `${data};${hora};${bebida};${log.ml};${factorFormatted};${log.hydration}\r\n`;
+            });
+
+            const BOM = "\uFEFF";
+            const blob = new Blob([BOM + csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            const today = new Date().toISOString().split("T")[0];
+
+            a.href = url;
+            a.download = `tamanduagua_${today}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            document.getElementById("lastBackup").innerHTML = new Date().toLocaleString("pt-BR");
+        }
+
+        // ======================
+        // NOVO: IMPORTAR E FAZER FUSÃO (ESTILO AEGIS)
+        // ======================
+        function importCSV(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const text = e.target.result;
+                const lines = text.split(/\r?\n/);
+                
+                let novosRegistrosContador = 0;
+
+                // Começa da linha 1 para pular o cabeçalho ("data;hora;...")
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+
+                    const columns = lines[i].split(';');
+                    if (columns.length < 6) continue;
+
+                    const dataTexto = columns[0]; // Ex: 20/05/2026
+                    const horaTexto = columns[1]; // Ex: 14:35
+                    const name = columns[2];
+                    const ml = Number(columns[3]);
+                    const factor = Number(columns[4].replace(',', '.'));
+                    const hydration = Math.round(ml * factor);
+
+                    // Converter "DD/MM/AAAA HH:MM" de volta para um Objeto Date válido
+                    const partsData = dataTexto.split('/');
+                    const partsHora = horaTexto.split(':');
+                    // Meses no JS começam em 0, por isso o -1
+                    const dataObjeto = new Date(partsData[2], partsData[1] - 1, partsData[0], partsHora[0], partsHora[1]);
+                    const isoString = dataObjeto.toISOString();
+
+                    // MÁGICA DO MERGE: Verificar se essa data/hora e bebida exata já existem nos logs do navegador
+                    const duplicado = logs.some(log => {
+                        let logDate = new Date(log.createdAt).toISOString();
+                        return logDate === isoString && log.name === name;
+                    });
+
+                    // Se não for duplicado, adiciona ao array atual
+                    if (!duplicado) {
+                        logs.push({
+                            name,
+                            ml,
+                            factor,
+                            hydration,
+                            createdAt: isoString
+                        });
+                        novosRegistrosContador++;
+                    }
+                }
+
+                // Organiza a lista por ordem de horário novamente
+                logs.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+                saveStorage();
+                render();
+                
+                alert(`Backup processado! Adicionados ${novosRegistrosContador} novos registros que não estavam aqui.`);
+                input.value = ""; // Reseta o input de arquivo
+            };
+
+            // Lê o arquivo como texto UTF-8 para não quebrar acentos
+            reader.readAsText(file, "UTF-8");
+        }
+
+        // ======================
+        // RENDER
+        // ======================
+        function render(){
+            const logsDiv = document.getElementById("logs");
+            logsDiv.innerHTML = "";
+            let total = 0;
+
+            logs.forEach((log, index) => {
+                total += log.hydration;
+                let createdDate = new Date(log.createdAt);
+                if(isNaN(createdDate.getTime())){ createdDate = new Date(); }
+
+                const day = createdDate.toLocaleDateString("pt-BR");
+                const hour = createdDate.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+
+                logsDiv.innerHTML += `
+                    <div class="log">
+                        <div class="log-left">
+                            <div><b>${log.name}</b></div>
+                            <div class="small">${day} • ${hour}</div>
+                        </div>
+                        <div class="tag">${log.ml}ml</div>
+                        <button class="delete" onclick="deleteLog(${index})">X</button>
+                    </div>
+                `;
+            });
+
+            const liters = (total / 1000).toFixed(1);
+            const percent = Math.min((total / goal) * 100, 100);
+
+            document.getElementById("totalWater").innerHTML = liters + "L";
+            document.getElementById("percentage").innerHTML = percent.toFixed(0) + "% da meta atingida";
+            document.getElementById("bar").style.width = percent + "%";
+            document.getElementById("remaining").innerHTML = Math.max(goal - total, 0).toFixed(0) + "ml";
+            document.getElementById("logCount").innerHTML = logs.length;
+            document.getElementById("goalText").innerHTML = goal + "ml";
+        }
+
+        // ======================
+        // INIT
+        // ======================
+        updateDate();
+        render();
+    </script>
+</body>
+</html>
